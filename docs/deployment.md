@@ -6,7 +6,7 @@
 |---|---|
 | **Backend API (Render)** | https://wexa-ai-assignment-ma1t.onrender.com |
 | **Health check** | https://wexa-ai-assignment-ma1t.onrender.com/api/health |
-| **Frontend (Netlify)** | _Set after Netlify deploy — update README section 14_ |
+| **Frontend (Netlify)** | https://benevolent-crostata-93a727.netlify.app |
 
 Database seed status: **complete** (12 jobs, 25 skills verified via production API).
 
@@ -29,7 +29,7 @@ COGNODB_URI=bolt+s://your-instance.databases.cognodb.cloud
 COGNODB_USERNAME=cognodb
 COGNODB_PASSWORD=your-password
 NODE_ENV=production
-CORS_ORIGIN=https://your-app.netlify.app
+CORS_ORIGIN=https://benevolent-crostata-93a727.netlify.app
 ```
 
 Set `CORS_ORIGIN` to your exact Netlify frontend URL after frontend deploy.
