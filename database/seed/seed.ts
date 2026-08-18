@@ -236,5 +236,9 @@ async function seed(): Promise<void> {
 
 seed().catch((error) => {
   console.error("Seed failed:", error.message ?? error);
+  console.error("\nTroubleshooting:");
+  console.error("  • Run curl http://localhost:3001/api/health — database should be connected");
+  console.error("  • Check COGNODB_URI, COGNODB_USERNAME, COGNODB_PASSWORD in .env");
+  console.error("  • Restart the CognoDB instance if port is open but Bolt keeps failing");
   process.exit(1);
 });

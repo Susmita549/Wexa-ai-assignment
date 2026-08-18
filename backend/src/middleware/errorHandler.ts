@@ -18,6 +18,7 @@ export function errorHandler(
   _next: NextFunction
 ): void {
   if (err instanceof ApiError) {
+    // Expected API errors (404, 400, etc.) — pass through the message and status code.
     res.status(err.statusCode).json({
       success: false,
       error: err.message,
@@ -28,6 +29,7 @@ export function errorHandler(
 
   if (isNeo4jError(err)) {
     console.error("Database error:", sanitizeMessage(err.message));
+    // Driver failures may include URIs or credentials — return a generic 503 to the client.
     res.status(503).json({
       success: false,
       error: "Database service unavailable",

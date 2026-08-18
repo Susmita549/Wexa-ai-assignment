@@ -27,6 +27,37 @@ export class ApiClientError extends Error {
   }
 }
 
+export function getDetailPageError(error: unknown): {
+  notFound: boolean;
+  message: string;
+} {
+  if (error instanceof ApiClientError) {
+    if (error.statusCode === 404) {
+      return { notFound: true, message: error.message };
+    }
+    if (error.statusCode === 503) {
+      return {
+        notFound: false,
+        message:
+          "The database is temporarily unavailable. Please try again in a moment.",
+      };
+    }
+    if (error.statusCode >= 500) {
+      return {
+        notFound: false,
+        message: "Something went wrong on the server. Please try again.",
+      };
+    }
+    return { notFound: false, message: error.message };
+  }
+
+  return {
+    notFound: false,
+    message:
+      "Could not reach the API. Check that the backend is running and try again.",
+  };
+}
+
 async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...options,
@@ -40,6 +71,7 @@ async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const body = (await response.json()) as T | { success: false; error: string };
 
   if (!response.ok || (body as { success?: boolean }).success === false) {
+    // Backend returns { success: false, error: "..." } for ApiError and Neo4j failures.
     const message =
       (body as { error?: string }).error ??
       `Request failed (${response.status})`;

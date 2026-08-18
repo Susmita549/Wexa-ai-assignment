@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getSkillRelated, exploreGraph } from "@/services/api";
+import {
+  exploreGraph,
+  getDetailPageError,
+  getSkillRelated,
+} from "@/services/api";
 import { BackLink } from "@/components/layout/BackLink";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Badge } from "@/components/ui/Badge";
@@ -9,6 +13,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GraphHint } from "@/components/ui/GraphHint";
 import { ConnectionList } from "@/components/graph/ConnectionList";
 import { Button } from "@/components/ui/Button";
+import { DetailPageError } from "@/components/ui/DetailPageError";
 
 export const dynamic = "force-dynamic";
 
@@ -27,8 +32,17 @@ export default async function SkillDetailPage({ params }: Props) {
       getSkillRelated(id),
       exploreGraph(id, "Skill"),
     ]);
-  } catch {
-    notFound();
+  } catch (error) {
+    const { notFound: isNotFound, message } = getDetailPageError(error);
+    if (isNotFound) notFound();
+    return (
+      <DetailPageError
+        backHref="/skills"
+        backLabel="Back to skills"
+        message={message}
+        retryHref={`/skills/${id}`}
+      />
+    );
   }
 
   const { skill, technologies, jobs } = related;

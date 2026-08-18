@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { exploreGraph, getJob, getJobTechnologies } from "@/services/api";
+import {
+  exploreGraph,
+  getDetailPageError,
+  getJob,
+  getJobTechnologies,
+} from "@/services/api";
 import { BackLink } from "@/components/layout/BackLink";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Badge } from "@/components/ui/Badge";
@@ -9,6 +14,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GraphHint } from "@/components/ui/GraphHint";
 import { ConnectionList } from "@/components/graph/ConnectionList";
 import { Button } from "@/components/ui/Button";
+import { DetailPageError } from "@/components/ui/DetailPageError";
 
 export const dynamic = "force-dynamic";
 
@@ -29,8 +35,17 @@ export default async function JobDetailPage({ params }: Props) {
       getJobTechnologies(id),
       exploreGraph(id, "Job"),
     ]);
-  } catch {
-    notFound();
+  } catch (error) {
+    const { notFound: isNotFound, message } = getDetailPageError(error);
+    if (isNotFound) notFound();
+    return (
+      <DetailPageError
+        backHref="/jobs"
+        backLabel="Back to jobs"
+        message={message}
+        retryHref={`/jobs/${id}`}
+      />
+    );
   }
 
   if (!jobDetail.job) notFound();

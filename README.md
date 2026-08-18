@@ -527,7 +527,6 @@ Suggested walkthrough (3–5 min):
 
 - Expose the 4-hop `developer-project-to-skills` query in the UI (currently verified via `npm run verify:queries` only)
 - Lightweight `/api/stats` endpoint for dashboard counts without full list fetches
-- Friendly error UI when the API is unreachable on server-rendered detail pages
 - Pagination if the dataset grows beyond seed scale
 
 ---

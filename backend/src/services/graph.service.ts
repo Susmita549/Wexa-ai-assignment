@@ -14,6 +14,7 @@ import {
 import { ApiError } from "../utils/apiError";
 
 function wrapDbError(error: unknown): never {
+  // Missing env vars — surfaced as 503; other Neo4j errors bubble to errorHandler.
   if (error instanceof Neo4jConfigError) {
     throw new ApiError(503, "Database is not configured");
   }

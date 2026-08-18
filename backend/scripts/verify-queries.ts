@@ -31,6 +31,10 @@ async function main(): Promise<void> {
   const connectivity = await verifyConnectivity();
   if (!connectivity.connected) {
     console.error("Cannot verify queries — CognoDB not connected:", connectivity.message);
+    console.error("\nTroubleshooting:");
+    console.error("  • Confirm your CognoDB instance is Running at https://console.cognodb.com");
+    console.error("  • COGNODB_URI must use bolt+s:// (copy exactly from the console)");
+    console.error("  • After connectivity works, run: npm run db:seed");
     process.exit(1);
   }
 
