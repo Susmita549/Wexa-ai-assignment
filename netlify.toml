@@ -1,0 +1,13 @@
+# Netlify — frontend (monorepo root build)
+# Backend API: https://wexa-ai-assignment-ma1t.onrender.com
+
+[build]
+  command = "npm install --include=dev && npm run build -w frontend"
+  publish = "frontend/.next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NEXT_PUBLIC_API_URL = "https://wexa-ai-assignment-ma1t.onrender.com"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
