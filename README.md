@@ -512,7 +512,7 @@ Verified live (Aug 2026):
 
 <!-- Add your recording link before submission -->
 
-**Screen recording:** _Coming soon — https://your-recording-link.example.com_
+**Screen recording:** https://drive.google.com/drive/folders/1wgYggzMIG7s0dR0tzlnoOkBqoAzufsjm?usp=sharing
 
 Suggested walkthrough (3–5 min):
 
